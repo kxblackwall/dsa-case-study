@@ -58,60 +58,72 @@ To launch the interactive menu, run the `main` module from the root folder:
 
 ```bash
 python3 -m src.main
+```
 
--------------------------------------------- SETUP FOR WINDOWS ----------------------------------------------
+Setup and Running (Windows)
+The project runs perfectly on Windows. The setup commands are just slightly different.
 
+Clone Repository:
 
-Clone  Repository: 
+PowerShell
 
-# PowerShell 
 git clone [https://github.com/](https://github.com/)[YourUsername]/[Your-Repo-Name].git
+Navigate to Project (in PowerShell or CMD):
 
-# Navigate  to  project (in CMD  or Powershell)
+PowerShell
+
 cd python_projects
+Create Virtual Environment:
 
-# 3. Create a Virtual environment
+PowerShell
+
 # 'python' is typically used instead of 'python3' on Windows
 python -m venv .venv
+Activate Environment (in PowerShell):
 
-# 4. Activate  Environment (in powershell):
- .\.venv\Scripts\Activate.ps1
- (If using old Command Prompt, the command is .\.venv\Scripts\activate.bat)
+PowerShell
 
-# 5. Install dependencies
- pip install pytest
+.\.venv\Scripts\Activate.ps1
+(If using old Command Prompt, the command is .\.venv\Scripts\activate.bat)
 
-# 6. Run the  program  
-pythom -m  src.main
+Install Dependencies:
 
+PowerShell
 
-# 7. Running the test 
-- To verify all logic is working correctly, run pytest from the root folder (this command is the same on all platforms):
-pytest 
+pip install pytest
+Run the Program:
 
-------------------------------------------  END --------------------------------------------
+PowerShell
 
+python -m src.main
+Running the Tests
+To verify all logic is working correctly, run pytest from the root folder (this command is the same on all platforms):
 
+Bash
 
+pytest
+4. Configuration (config.json)
+The entire pipeline is controlled by config.json.
 
-# CONFIGURATION
-  -  the  whole pipeline is controlled by config.json
-  -  paths: Specifies the csv  input and output directories
-  -  weights:  Defines the percentage  weight for each grade components
-  -  quiz_count: tells the  ingestor how many quiz column to look for.
-  -  threshold:  Sets the cut-off  for the  at-risk student report.
-  -  grade_cutoffs: Defines the minimum grade for each letter (A, B, C, etc.).
-  -  curve_settings:
-      - apply_curve: true or false to enable/disable the grade curve.
-      - target_max_grade: The score the highest student will be curved to (e.g., 100).
-      - curve_cap: The absolute maximum score any student can have after the curve (e.g., 100).
+paths: Specifies the CSV input and output directories.
 
+weights: Defines the percentage weight for each grade component.
 
+quiz_count: Tells the ingestor how many quiz columns to look for.
 
+thresholds: Sets the cutoffs for the at-risk student report.
 
+grade_cutoffs: Defines the minimum grade for each letter (A, B, C, etc.).
 
-# PROGRAM STRUCTURE
+curve_settings:
 
+apply_curve: true or false to enable/disable the grade curve.
+
+target_max_grade: The score the highest student will be curved to (e.g., 100).
+
+curve_cap: The absolute maximum score any student can have after the curve (e.g., 100).
+
+5. Program Structure
 python_projects/
 ├── config.json             # Main configuration file
 ├── README.md               # This file
@@ -122,37 +134,33 @@ python_projects/
 │   └── section_..._report.csv # Generated report
 ├── src/
 │   ├── __init__.py
-│   ├── ingest.py           # reading and validating data
-│   ├── transform.py        # grade/curve calculation
-│   ├── analyze.py          # stats and at-risk logic
-│   ├── reports.py          # writing new CSV files
+│   ├── ingest.py           # Handles reading and validating data
+│   ├── transform.py        # Handles grade/curve calculation
+│   ├── analyze.py          # Handles stats and at-risk logic
+│   ├── reports.py          # Handles writing new CSV files
 │   └── main.py             # Runs the main menu and pipeline
 └── tests/
     ├── __init__.py
-    ├── test_analyze.py     # analysis logic
-    └── test_transform.py   # transform logic
+    ├── test_analyze.py     # Unit tests for analysis logic
+    └── test_transform.py   # Unit tests for transform logic
+6. Complexity Discussion
+Data Structure
+The primary data structure for this project is an array of dictionaries (a Python list of dicts). This structure was chosen because it provides a highly intuitive and flexible way to manage student records. Each student is represented as a single dictionary, allowing for easy access to data by name, such as row['final_grade'] or row['student_id']. This is far more readable than managing multiple "parallel arrays" (e.g., one list for names, one for grades) where data could easily become unsynchronized. This structure also made transformations simple, as new computed values (like final_grade or letter_grade) could be added directly to each student's dictionary.
 
+Algorithmic Complexity
+The pipeline's performance is primarily linear, where N is the number of student records.
 
-# COMPLEXITY DISCUSSION
+Ingest, Transform, and Report: Most main pipeline operations iterate through the list of N students once, resulting in O(N) (Linear) complexity. This includes reading the CSV, computing grades, curving, and exporting reports.
 
-  Data structure : 
- The primary data structure for this project is an array of dictionaries (a Python list of dicts). This structure was chosen because it provides a highly intuitive and flexible way to manage student records. Each student is represented as a single dictionary, allowing for easy access to data by name, such as row['final_grade'] or row['student_id']. This is far more readable than managing multiple "parallel arrays" (e.g., one list for names, one for grades) where data could easily become unsynchronized. This structure also made transformations simple, as new computed values (like final_grade or letter_grade) could be added directly to each student's dictionary.
+Statistics: The most computationally expensive part is in the analyze.py module. To calculate the median, the list of N grades must be sorted, which has a time complexity of O(N log N).
 
-The data structure used for this project is an array  of dictionaries (  python  lists ). we chose this because it provided a flexible way to maange records. Each student is represented by  a single dictionary, allowing for easy access to data by  name, such row (Final grade) or row (student ID) this is very readable than managing multiple arrays where data can beome unsynchronized. This also made the transformations simple.
+Search: The "Find Student" feature in the menu performs a linear search, which has a worst-case complexity of O(N).
 
-Algorithm side : the piple is primarily linear. where we let N be the number of student records. 
-- Ingest, trasnform and Report: all main pipeline operations. reading the csv  computing grades,  curving,  assigning letters and exporting reports. 
-Statistics - The most computing oriented operation we have is the analyze.py that calculates the median  grades. 
-Search :  We had a command line menu so that the user can interact and this is one of its part. It performs a linear search  through the array. 
+7. Learning Reflection
+Our group worked together to provide a simple yet effective program for the case study assigned to us. Even after taking certifications, we realized we needed to study Python more before diving deep into this case study.
 
+A key challenge was collaborating as a group while using different operating systems. We had to find a workaround to ensure we could all contribute effectively. This was a big project for us, and we learned from its challenges. The most important lesson was to be resourceful and learn how to build a full project instead of just writing isolated code.
 
+At first, we were confused by the multi-folder structure and ran into many import issues. We even tried PyCharm, which was easier, but we returned to VS Code to meet the project's structural requirements. This forced us to truly understand how the editor runs code and how to configure a project properly. We also learned how to write unit tests, which act as a "safety net" for our code, even though it took extra time to write them.
 
-
-# LEARNING REFLECTION
-So our group worked together to provide a simple yet but effective program for the case study assigned to us. 
-we had to study coding python for a bit more before diving deep into making this case study even after taking our certifcations
-the First challenging part was when we tried to work as one while using different operating system. but eventually we had our work around so that we can collaborate still as a group even if we are far from one another.
-this project  was a very big for us and we had many challening parts and the most important thing we learn was to be resourceful and do our best into learning how to build a full projects instead of just writing code. at first we were confused as to why we need many folders and we ran into many issues. then we tried using other python ide like pycharm but after having an easy time we reflect back to the case study file that we had to provide a whole structure of the files so we went back to vscode  and did the best we can to make it work. as we  understood how the editor runs the code and the set up that we had to do.
-we also learned how to run unit test and we learned it act as a safety nets even if we took some time on coding it as well. 
-Finally, we debugged many errors that taught us a lot and we were able to learn how to traceback codes and  analyze things properly and sometimes we just forgot to put " or brackets.
-but overall in general we learned something we can apply to our day to day studies that coding involves testing, debugging and amanaging the project structure so that it can look presentable. its more than just writing code but understanding logic itself.  
+Finally, debugging taught us how to read tracebacks, analyze problems properly, and catch simple syntax errors. Overall, we learned that coding isn't just writing logic; it's about testing, debugging, and managing a project's structure to make it presentable and functional. This is a lesson we can apply to all our studies.
