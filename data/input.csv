@@ -1,0 +1,8 @@
+student_id,last_name,first_name,section,quiz1,quiz2,quiz3,quiz4,quiz5,midterm,final,attendance_percent
+1,Eman,nuel,S01,88,92,100,95,89,85,91,95
+2,Jarapojop,Amor,S02, 95, 90, 98, 99, 100, 92, 96, 88
+3,General,Hugo,S01,75,80,70,82,,80,85,92
+4,Dewey,Arpa,S02,105,99,100,98,97,95,94,100
+5,Jamelito,jhamell,S01,50,65,70,55,60,72,68,75
+6,Sol,Xavier,S02,81,88,85,90,82,84,85,81
+

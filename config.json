@@ -1,0 +1,28 @@
+{
+  "paths": {
+    "input_csv": "data/input.csv",
+    "output_dir": "data/"
+  },
+  "weights": {
+    "quizzes": 0.30,
+    "midterm": 0.30,
+    "final": 0.30,
+    "attendance": 0.10
+  },
+  "quiz_count": 5,
+  "thresholds": {
+    "at_risk_grade": 65,
+    "at_risk_attendance": 80
+  },
+  "grade_cutoffs": {
+    "A": 90,
+    "B": 80,
+    "C": 70,
+    "D": 60
+  },
+  "curve_settings": {
+    "apply_curve": true,
+    "target_max_grade": 100,
+    "curve_cap": 100
+  }
+}

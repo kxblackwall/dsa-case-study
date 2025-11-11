@@ -1,0 +1,13 @@
+# Python virtual environment
+.venv/
+
+# Python cache files
+__pycache__/
+*.pyc
+
+# VS Code settings
+.vscode/
+
+# Generated output files (we don't want to commit data)
+data/at_risk_report.csv
+data/section_*.csv
