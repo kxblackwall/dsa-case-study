@@ -122,7 +122,7 @@ apply_curve: true or false to enable/disable the grade curve.
 target_max_grade: The score the highest student will be curved to (e.g., 100).
 
 curve_cap: The absolute maximum score any student can have after the curve (e.g., 100).
-
+```
 5. Program Structure
 python_projects/
 ├── config.json             # Main configuration file
@@ -143,6 +143,7 @@ python_projects/
     ├── __init__.py
     ├── test_analyze.py     # Unit tests for analysis logic
     └── test_transform.py   # Unit tests for transform logic
+   ``` 
 6. Complexity Discussion
 Data Structure
 The primary data structure for this project is an array of dictionaries (a Python list of dicts). This structure was chosen because it provides a highly intuitive and flexible way to manage student records. Each student is represented as a single dictionary, allowing for easy access to data by name, such as row['final_grade'] or row['student_id']. This is far more readable than managing multiple "parallel arrays" (e.g., one list for names, one for grades) where data could easily become unsynchronized. This structure also made transformations simple, as new computed values (like final_grade or letter_grade) could be added directly to each student's dictionary.
